@@ -10,6 +10,9 @@
 # See /LICENSE for more information.
 #
 
+# change default ip to 192.168.10.1
+sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_generate 
+
 # Modify Default Hostname
 sed -i 's/ImmortalWrt/NekoHome/g' package/base-files/files/bin/config_generate
 
@@ -26,14 +29,19 @@ sed -i 's/mirrors.vsean.net\/openwrt/mirrors.pku.edu.cn\/immortalwrt/g' package/
 # Replace Banner
 cp -f $GITHUB_WORKSPACE/banner package/base-files/files/etc/banner
 
-# Change Default Theme to Argon
-sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
-sed -i 's/bootstrap/argon/g' ./feeds/luci/modules/luci-base/root/etc/config/luci
+# Theme
+# luci-theme-neobird
+git clone --depth 1 https://github.com/thinktip/luci-theme-neobird.git package/otherapp/luci-theme-neobird
 
-# Modify Argon Theme Settings
-sed -i 's/#5e72e4/#fef65b/g' feeds/luci/applications/luci-app-argon-config/root/etc/config/argon
-sed -i 's/#483d8b/#fef65b/g' feeds/luci/applications/luci-app-argon-config/root/etc/config/argon
-sed -i 's/bing/none/g' feeds/luci/applications/luci-app-argon-config/root/etc/config/argon
+# Mentohust
+git clone --depth 1 https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk.git package/otherapp/mentohust
 
-# Add Customized Background Image
-cp -f $GITHUB_WORKSPACE/bg1.jpg feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
+# UnblockNeteaseMusic
+git clone --depth 1 -b master  https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/unblockneteasemusic
+
+# iStore
+echo "src-git istore https://github.com/linkease/istore;main" >> feeds.conf.default
+
+# add feed
+echo "src-git nikki https://github.com/nikkinikki-org/OpenWrt-nikki.git;main" >> feeds.conf.default
+
